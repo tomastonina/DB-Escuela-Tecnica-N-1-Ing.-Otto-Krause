@@ -21,22 +21,6 @@ public Form1()
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                conexionBaseDatos.Open();
-                MessageBox.Show("Conectado");
-                conexionBaseDatos.Close();
-            }
-            catch (Exception)
-            {
-
-                MessageBox.Show("Error, no se puede conectar");
-            }
-
-        }
-
         private void button2_Click(object sender, EventArgs e)
         {
             MySqlCommand comando = new MySqlCommand("Select * from alumnos", conexionBaseDatos);

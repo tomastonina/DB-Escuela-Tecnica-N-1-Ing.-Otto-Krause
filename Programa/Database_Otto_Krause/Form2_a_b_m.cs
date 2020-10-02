@@ -48,7 +48,6 @@ namespace Database_Otto_Krause
                 int trimestre_tres = Int32.Parse(textBox6.Text);
 
                 int promedio_temp = (trimestre_uno+trimestre_dos+trimestre_tres) / 3;
-                label16.Text = promedio_temp.ToString();
                 string insert = "INSERT INTO calificacion (codigo_materia, dni_alumno, codigo_curso, primer_trimestre, segundo_trimestre, tercer_trimestre, promedio) values ('" + textBox8.Text + "','" + textBox1.Text + "','" + textBox9.Text + "','" + textBox4.Text + "','" + textBox5.Text + "','" + textBox6.Text + "','" + promedio_temp +"');";
                 MySqlCommand comando = new MySqlCommand(insert, conexionBaseDatos);
                 comando.ExecuteNonQuery();
@@ -125,5 +124,34 @@ namespace Database_Otto_Krause
                 textBox9.Visible = true;
             }
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            string consulta = "UPDATE alumnos SET nombre = @nombre, apellido = @apellido WHERE dni = @dni";
+            conexionBaseDatos.Open();
+            MySqlCommand comando = new MySqlCommand(consulta, conexionBaseDatos);
+            comando.Parameters.AddWithValue("@nombre", textBox10.Text);
+            comando.Parameters.AddWithValue("@apellido", textBox7.Text);
+            comando.Parameters.AddWithValue("@dni", textBox11.Text);
+            comando.ExecuteNonQuery();
+            conexionBaseDatos.Close();
+            MessageBox.Show("Actualizado");
+
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            conexionBaseDatos.Open();
+            string consulta = "DELETE FROM alumnos WHERE dni = '" + textBox12.Text + "';";
+            string consulta2 = "DELETE FROM calificacion WHERE dni_alumno = '" + textBox12.Text + "';";
+            MySqlCommand comando = new MySqlCommand(consulta, conexionBaseDatos);
+            MySqlCommand comando2 = new MySqlCommand(consulta2, conexionBaseDatos);
+            comando2.ExecuteNonQuery();
+            comando.ExecuteNonQuery();
+            conexionBaseDatos.Close();
+            MessageBox.Show("Alumno eliminado");
+        }
+
     }
 }
